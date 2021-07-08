@@ -1,42 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Получение золота
+/// Получение монет
 /// </summary>
 
 public class GettingGold : MonoBehaviour
 {
-    byte tapCount;
-    byte tapMax;
+    byte tapCount; //количество совершённых кликов
+    byte tapMax; //кол-во кликов, которое нужно совершить
 
-    int coins;
+    int coinVolue = 0; //содержимое хранилища
+    public int coinVolueMax = 100; //объём хранилища 
+    public int increaseCoins; // кол-во получаемых монет 
 
-    public Text ui;
-    public Text ui2;
+    public Text infoUI; //ui на кол-во монет в хранилище 
+    public Text remainingNumberOfClicksUI; //ui на кол-во кликов до спавна новых монет 
 
     private void Start()
     {
         tapCount = 0;
         tapMax = 4;
-        coins = 0;
+        increaseCoins = 10;
     }
-    public void TapCheck()
+
+    public void TapCheck() // метод для генерации монет 
     {
+        tapCount++;
+
         if (tapCount >= tapMax)
         {
-            tapCount= 0;
-            coins += 100;
-        }
-        else
-        {
-            tapCount++;
+            tapCount = 0;
+            CollectingCoin(increaseCoins);
+            infoUI.text = coinVolue + "/" + coinVolueMax;
         }
 
-        ui.text = "Ну вот койнов стоко: " + Rounding.FormatNum(coins);
-        ui2.text = "тапов стоко: " + (tapMax - tapCount);
+        remainingNumberOfClicksUI.text = "кликов: " + tapCount + "/" + tapMax;
     }
-    
+
+    public void CollectingCoin(int volue) //перенос монет в хранилище
+    {
+        if ((coinVolue + volue) >= coinVolueMax) coinVolue = coinVolueMax;
+        else coinVolue += volue;
+
+        infoUI.text = coinVolue + "/" + coinVolueMax;
+    }
+
+    public void GoldsPlus() //забираем монетки в общее хранилище 
+    {
+        if (coinVolue > 0)
+        {
+            Repository.PlusCoin(coinVolue);
+            coinVolue = 0;
+        }
+
+        infoUI.text = coinVolue + "/" + coinVolueMax;
+    }
 }
