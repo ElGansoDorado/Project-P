@@ -1,0 +1,25 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+/// <summary>
+/// Хранилище монет, аля банк
+/// </summary>
+
+public class Repository : MonoBehaviour
+{
+    public static long coins;
+
+    public Text CoinsUI;
+    public void Start() => coins = 0; // здесь потом монеты будут загружаться из файла.
+
+    public static void PlusCoin(int plusCoin) => coins += plusCoin; //Прибавляем монетки
+
+    public static void MinusCoin(int minusCoin)//отнимаем монетки
+    {
+        if ((coins -= minusCoin) < 0) coins = 0;
+        else coins -= minusCoin;
+    }
+
+    public void Info() => CoinsUI.text = Rounding.FormatNum(coins); //вывод инфы о кол-ве монет
+
+}
