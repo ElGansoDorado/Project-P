@@ -7,53 +7,62 @@ using UnityEngine.UI;
 
 public class GettingGold : MonoBehaviour
 {
-    byte tapCount; //количество совершённых кликов
+    private byte tapCount; //количество совершённых кликов
+    public byte TapCount
+    {
+        get => tapCount;
+        set
+        {
+            if (value >= CoinValueMax) tapCount = tapMax;
+            else tapCount = value;
+
+            remainingNumberOfClicksUI.text = "кликов: " + TapCount + "/" + tapMax;
+        }
+    }
+
     byte tapMax; //кол-во кликов, которое нужно совершить
 
-    int coinVolue = 0; //содержимое хранилища
-    public int coinVolueMax = 100; //объём хранилища 
-    public int increaseCoins; // кол-во получаемых монет 
+    private int coinValue; //содержимое хранилища
+    public int CoinValue
+    {
+        get => coinValue;
+        set
+        {
+            if (value >= CoinValueMax) coinValue = CoinValueMax;
+            else coinValue = value;
+
+            infoUI.text = CoinValue + "/" + CoinValueMax;
+        }
+    }
+    public int CoinValueMax { get; set; } //объём хранилища 
+    public int increaseCoins { get; set; } // кол-во получаемых монет 
 
     public Text infoUI; //ui на кол-во монет в хранилище 
     public Text remainingNumberOfClicksUI; //ui на кол-во кликов до спавна новых монет 
 
     private void Start()
     {
-        tapCount = 0;
+        TapCount = 0;
         tapMax = 4;
         increaseCoins = 10;
+        CoinValueMax = 100;
+        CoinValue = 0;
     }
 
     public void TapCheck() // метод для генерации монет 
     {
-        tapCount++;
+        TapCount++;
 
-        if (tapCount >= tapMax)
+        if (TapCount >= tapMax)
         {
-            tapCount = 0;
-            CollectingCoin(increaseCoins);
-            infoUI.text = coinVolue + "/" + coinVolueMax;
+            TapCount = 0;
+            CoinValue += increaseCoins;
         }
-
-        remainingNumberOfClicksUI.text = "кликов: " + tapCount + "/" + tapMax;
     }
 
-    public void CollectingCoin(int volue) //перенос монет в хранилище
+    public void GoldsPlus()
     {
-        if ((coinVolue + volue) >= coinVolueMax) coinVolue = coinVolueMax;
-        else coinVolue += volue;
-
-        infoUI.text = coinVolue + "/" + coinVolueMax;
-    }
-
-    public void GoldsPlus() //забираем монетки в общее хранилище 
-    {
-        if (coinVolue > 0)
-        {
-            Repository.PlusCoin(coinVolue);
-            coinVolue = 0;
-        }
-
-        infoUI.text = coinVolue + "/" + coinVolueMax;
+        Repository.PlusCoin(CoinValue); //забираем монетки в общее хранилище
+        CoinValue = 0;
     }
 }
