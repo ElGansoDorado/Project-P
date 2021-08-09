@@ -26,8 +26,8 @@ public class Repository
     } // кол-во кристаллов 
     public int GemDuringAllThisTime { get; private set; } //кристаллы за всё время
 
-    private int money; // монеты
-    public int Money 
+    private double money; // монеты
+    public double Money 
     { 
         get => money; 
         private set
@@ -37,17 +37,17 @@ public class Repository
             money = value;
         }
     } //кол-во монет
-    public int MoneyDuringAllThisTime { get; private set; } // монеты за всё врем
+    public double MoneyDuringAllThisTime { get; private set; } // монеты за всё врем
 
     // и ещё куча различной статистики: 
 
     public int TapNumbers { get; set; } //количество совершённых кликов.
-
+    //Test push
 
     // пару методов для работы с монетами..
-    public void PlusMoney(int money) => Money += money;
-    public void MinusMoney(int money) => Money -= money;
-    public bool CheckMoney(int cost)
+    public void PlusMoney(double money) => Money += money;
+    public void MinusMoney(double money) => Money -= money;
+    public bool CheckMoney(double cost)
     {
         if (Money >= cost) return true;
         return false;
