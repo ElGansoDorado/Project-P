@@ -122,7 +122,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8765449540241278234}
         m_MethodName: UpdateProfit
         m_Mode: 1
         m_Arguments:
@@ -949,7 +949,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8765449540241278234}
         m_MethodName: UpdateTime
         m_Mode: 1
         m_Arguments:
@@ -1121,7 +1121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7598872348004970243}
-  - component: {fileID: 429142172133241890}
+  - component: {fileID: 8765449540241278234}
   m_Layer: 5
   m_Name: Improve
   m_TagString: Untagged
@@ -1153,7 +1153,7 @@ RectTransform:
   m_AnchoredPosition: {x: -392.3, y: 316.31}
   m_SizeDelta: {x: 100, y: 114.08472}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &429142172133241890
+--- !u!114 &8765449540241278234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1165,14 +1165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed2e5ce2bef7ba047bec5a1b9891ccdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeLevelUI: {fileID: 0}
-  ProfitLevelUI: {fileID: 0}
-  KritLevelUI: {fileID: 0}
-  EnergiLevelUI: {fileID: 0}
-  CostUpdateTimeUI: {fileID: 0}
-  CostUpdateProfitUI: {fileID: 0}
-  CostUpdateCriticalUI: {fileID: 0}
-  CostUpdateEnergiUI: {fileID: 0}
+  creature: {fileID: 0}
 --- !u!1 &7598872348125546159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1295,7 +1288,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8765449540241278234}
         m_MethodName: UpdateEnergy
         m_Mode: 1
         m_Arguments:
@@ -1428,7 +1421,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8765449540241278234}
         m_MethodName: UpdateCritical
         m_Mode: 1
         m_Arguments:

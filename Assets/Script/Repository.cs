@@ -26,7 +26,7 @@ public class Repository
     } // кол-во кристаллов 
     public int GemDuringAllThisTime { get; private set; } //кристаллы за всё время
 
-    private double money; // монеты
+    private double money = 500; // монеты
     public double Money 
     { 
         get => money; 
@@ -42,6 +42,9 @@ public class Repository
     // и ещё куча различной статистики: 
 
     public int TapNumbers { get; set; } //количество совершённых кликов.
+
+    //скиллы
+    public int CriticalSkill { get; set; } = 1;
 
     // пару методов для работы с монетами..
     public void PlusMoney(double money) => Money += money;

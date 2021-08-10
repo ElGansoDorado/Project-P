@@ -14,8 +14,8 @@ public class ClickManager : MonoBehaviour
 
     public int NumbersOfClicks { get; private set; } = 30; //количество кликов нужных для замены картинки
     public float Increments { get; private set; } = 1; // прибыль за клик 
-    
-    public byte LuckCrtitical {get; private set;} //удача для критов
+
+    public byte LuckCritical { get; private set; } = 10;//удача для критов
 
     private void Start()
     {
@@ -29,7 +29,7 @@ public class ClickManager : MonoBehaviour
 
     private void Click() // 
     {
-        if(LuckCritical >= Random.Range(0, 101))  rep.PlusMoney(Increments * 2);
+        if(LuckCritical * rep.CriticalSkill >= Random.Range(0, 101))  rep.PlusMoney(Increments * 2);
         else rep.PlusMoney(Increments);
 
         Bar.fillAmount += (float)1 / NumbersOfClicks;

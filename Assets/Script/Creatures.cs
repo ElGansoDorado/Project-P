@@ -36,10 +36,10 @@ abstract public class Creatures : MonoBehaviour
                 drawProg.BarDrawing(0.05f);
             }
 
-            if (Critical >= Random.Range(0, 101)) rep.PlusMoney(EarnedProfit * 2); //начисление монет с критом и без.
+            if (Critical * rep.CriticalSkill >= Random.Range(0, 101)) rep.PlusMoney(EarnedProfit * 2); //начисление монет с критом и без.
             else rep.PlusMoney(EarnedProfit);
 
-            if (LockEnergy >= Random.Range(0, 101) && Energy <= 3) 
+            if (LuckEnergy >= Random.Range(0, 101) && Energy <= 3) 
             { 
                 Energy++; 
                 drawProg.EnergiDrawingPlus(0.35f);

@@ -14,16 +14,16 @@ public class Improvement : MonoBehaviour
     private const byte maxLevelEnergy = 20; // максимальное кол-во улучшений для шанса выпадения энергии
 
 
-    public byte LevelTime { get; private set; } //уровень улучшения времени
-    public byte LevelProfit { get; private set; } //уровень улучшения прибыли
-    public byte LevelCritical { get; private set; } // уровень улучшения крита на монеты 
-    public byte LevelEnergy { get; private set; } // уровень улучшения шанса выпадения энергии 
+    private byte LevelTime; //уровень улучшения времени
+    private byte LevelProfit; //уровень улучшения прибыли
+    private byte LevelCritical; // уровень улучшения крита на монеты 
+    private byte LevelEnergy; // уровень улучшения шанса выпадения энергии 
 
     private bool GetImproveUp(ref byte level, byte levelMax)
     {
-        if(!rep.ChecMoney(creature.CostCreature * Mathf.Pow(1.5, level)) || level >= levelMax) return false;
+        if(!rep.CheckMoney(creature.CostCreature * Mathf.Pow(1.5f, level)) || level >= levelMax) return false;
 
-        rep.MinusMoney(creature.CostCreature * Mathf.Pow(1.5, level));
+        rep.MinusMoney(creature.CostCreature * Mathf.Pow(1.5f, level));
         level++;
 
         UpdateUI();
@@ -31,7 +31,7 @@ public class Improvement : MonoBehaviour
     }
     private void Awake()
     {
-        UpdateTextUI = GetComponentsInChildren(); 
+        UpdateTextUI = GetComponentsInChildren<Text>(); 
         UpdateUI();
     }
 
@@ -44,7 +44,7 @@ public class Improvement : MonoBehaviour
 
     public void UpdateProfit() //увеличивание дохода
     {
-        if (GetImproveUp(ref LevelProfit,maxLevelProfit))
+        if (GetImproveUp(ref LevelProfit, maxLevelProfit))
             creature.EarnedProfit += 2;
     }
 
@@ -63,15 +63,15 @@ public class Improvement : MonoBehaviour
     private void UpdateUI()
     {
         UpdateTextUI[0].text = $"{LevelTime}/{maxLevelTime}";
-        UpdateTextUI[1].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5, LevelTime));
+        UpdateTextUI[1].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5f, LevelTime));
 
         UpdateTextUI[3].text = $"{LevelCritical}/{maxLevelCritical}";
-        UpdateTextUI[4].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5, LevelCritical));
+        UpdateTextUI[4].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5f, LevelCritical));
 
         UpdateTextUI[6].text = $"{LevelEnergy}/{maxLevelEnergy}";
-        UpdateTextUI[7].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5, LevelEnergy));
+        UpdateTextUI[7].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5f, LevelEnergy));
 
         UpdateTextUI[9].text = $"{LevelProfit}/{maxLevelProfit}";
-        UpdateTextUI[10].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5, LevelProfit));
+        UpdateTextUI[10].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5f, LevelProfit));
     }
 }
