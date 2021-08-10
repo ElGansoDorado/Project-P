@@ -42,7 +42,6 @@ public class Repository
     // и ещё куча различной статистики: 
 
     public int TapNumbers { get; set; } //количество совершённых кликов.
-    //Test push
 
     // пару методов для работы с монетами..
     public void PlusMoney(double money) => Money += money;

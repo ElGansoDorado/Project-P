@@ -17,14 +17,10 @@ abstract public class Creatures : MonoBehaviour
     public int EarnedProfit { get; set; } // количество получаемых монет
     public float TimeProfit { get; set; } // время до получения монет
 
-    public int CostCreature { get; set; } //цена существа.
-    public int CostTime { get; set; } //цена существа.
-    public int CostProfit { get; set; } //цена существа.
-    public int CostCritical { get; set; } //цена существа.
-    public int CostEnergy { get;  set; } //цена существа.
+    public int CostCreature { get; protected set; } //цена существа.
 
     public byte Critical { get; set; } //для рандома крита.
-    public byte LockEnergy { get; set; } = 1; // для рандома энергии.
+    public byte LuckEnergy { get; set; } = 1; // для рандома энергии.
 
     private void Start()
     {

@@ -10,10 +10,12 @@ public class ClickManager : MonoBehaviour
     public Image paintings; // для замены картинки 
 
     public Sprite[] Sprites = new Sprite[3]; //ещё не работал с файлами, поэтому пока так.
-    public byte NumberSprite { get; private set; } //выбирает какой спрайт сейчас будет отоброжаться 
+    public byte NumberSprite { get; private set; } //выбирает какой спрайт будет сейчас отоброжаться 
 
     public int NumbersOfClicks { get; private set; } = 30; //количество кликов нужных для замены картинки
-    public int Increments { get; private set; } = 1; // прибыль за клик 
+    public float Increments { get; private set; } = 1; // прибыль за клик 
+    
+    public byte LuckCrtitical {get; private set;} //удача для критов
 
     private void Start()
     {
@@ -27,7 +29,8 @@ public class ClickManager : MonoBehaviour
 
     private void Click() // 
     {
-        rep.PlusMoney(Increments);
+        if(LuckCritical >= Random.Range(0, 101))  rep.PlusMoney(Increments * 2);
+        else rep.PlusMoney(Increments);
 
         Bar.fillAmount += (float)1 / NumbersOfClicks;
         if (Bar.fillAmount >= 1.0f)

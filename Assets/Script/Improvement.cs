@@ -4,17 +4,8 @@ using UnityEngine.UI;
 public class Improvement : MonoBehaviour
 {
     private Repository rep = Repository.GetInstance(); 
-    private Creatures creature;
-
-    public Text TimeLevelUI;
-    public Text ProfitLevelUI;
-    public Text KritLevelUI;
-    public Text EnergiLevelUI;
-
-    public Text CostUpdateTimeUI;
-    public Text CostUpdateProfitUI;
-    public Text CostUpdateCriticalUI;
-    public Text CostUpdateEnergiUI;
+    private Text[] UpdateTextUI = new Text[12];
+    public Creatures creature;
 
     //максимальные уровни
     private const byte maxLevelTime = 20; // максимальное кол-во улучшений для времени
@@ -28,75 +19,59 @@ public class Improvement : MonoBehaviour
     public byte LevelCritical { get; private set; } // уровень улучшения крита на монеты 
     public byte LevelEnergy { get; private set; } // уровень улучшения шанса выпадения энергии 
 
+    private bool GetImproveUp(ref byte level, byte levelMax)
+    {
+        if(!rep.ChecMoney(creature.CostCreature * Mathf.Pow(1.5, level)) || level >= levelMax) return false;
+
+        rep.MinusMoney(creature.CostCreature * Mathf.Pow(1.5, level));
+        level++;
+
+        UpdateUI();
+        return true;
+    }
     private void Awake()
     {
-        creature = GetComponent<Creatures>();
+        UpdateTextUI = GetComponentsInChildren(); 
         UpdateUI();
     }
 
     //методы улучшений
     public void UpdateTime() // уменьшение времени
     {
-        if (rep.CheckMoney(creature.CostTime) && LevelTime < maxLevelTime)
-        {
-            LevelTime++;
-
-            rep.MinusMoney(creature.CostTime);
-            creature.CostTime *= 2;
+        if (GetImproveUp(ref LevelTime, maxLevelTime)) 
             creature.TimeProfit -= (creature.TimeProfit / 2) / maxLevelTime;
-        }
-        UpdateUI();
     }
 
     public void UpdateProfit() //увеличивание дохода
     {
-        if (rep.CheckMoney(creature.CostProfit) && LevelProfit < maxLevelProfit)
-        {
-            LevelProfit++;
-
-            rep.MinusMoney(creature.CostProfit);
-            creature.CostProfit *= 2;
+        if (GetImproveUp(ref LevelProfit,maxLevelProfit))
             creature.EarnedProfit += 2;
-        }
-        UpdateUI();
     }
 
     public void UpdateCritical() // улучшение для крита
     {
-        if (rep.CheckMoney(creature.CostCritical) && LevelCritical < maxLevelCritical)
-        {
-            LevelCritical++;
-
-            rep.MinusMoney(creature.CostCritical);
-            creature.CostCritical *= 2;
+        if (GetImproveUp(ref LevelCritical, maxLevelCritical))
             creature.Critical += 1;
-        }
-        UpdateUI();
     }
 
     public void UpdateEnergy() // улучшение для шанса выпадения энергии 
     {
-        if (rep.CheckMoney(creature.CostEnergy) && LevelEnergy < maxLevelEnergy)
-        {
-            LevelEnergy++;
-
-            rep.MinusMoney(creature.CostEnergy);
-            creature.CostEnergy *= 2;
-            creature.LockEnergy += 1;
-        }
-        UpdateUI();
+        if (GetImproveUp(ref LevelEnergy, maxLevelEnergy))
+            creature.LuckEnergy += 1;
     }
 
     private void UpdateUI()
     {
-        TimeLevelUI.text = $"{LevelTime}/{maxLevelTime}";
-        ProfitLevelUI.text = $"{LevelProfit}/{maxLevelProfit}";
-        KritLevelUI.text = $"{LevelCritical}/{maxLevelCritical}";
-        EnergiLevelUI.text = $"{LevelEnergy}/{maxLevelEnergy}";
+        UpdateTextUI[0].text = $"{LevelTime}/{maxLevelTime}";
+        UpdateTextUI[1].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5, LevelTime));
 
-        CostUpdateTimeUI.text = Rounding.FormatNum(creature.CostTime);
-        CostUpdateProfitUI.text = Rounding.FormatNum(creature.CostProfit);
-        CostUpdateCriticalUI.text = Rounding.FormatNum(creature.CostCritical);
-        CostUpdateEnergiUI.text = Rounding.FormatNum(creature.CostEnergy);
-}
+        UpdateTextUI[3].text = $"{LevelCritical}/{maxLevelCritical}";
+        UpdateTextUI[4].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5, LevelCritical));
+
+        UpdateTextUI[6].text = $"{LevelEnergy}/{maxLevelEnergy}";
+        UpdateTextUI[7].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5, LevelEnergy));
+
+        UpdateTextUI[9].text = $"{LevelProfit}/{maxLevelProfit}";
+        UpdateTextUI[10].text = Rounding.FormatNum(creature.CostCreature * Mathf.Pow(1.5, LevelProfit));
+    }
 }
